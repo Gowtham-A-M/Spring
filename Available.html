@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- Link to the external JavaScript file -->
+    <script src="Myscrpit.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        table {
+            width: 80%;
+            margin: 50px auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+            font-size: 18px;
+        }
+
+        td {
+            font-size: 16px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #e9e9e9;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Course Information</h1>
+    <table>
+        <tr>
+            <th>CourseID</th>
+            <th>CourseName</th>
+            <th>Trainer</th>
+           
+        </tr>
+   <!-- Table rows will be inserted here by JavaScript -->
+        <tbody align="center" id="availablecourse"></tbody>
+    </table>
+
+    <script type="text/javascript">
+        window.onload = function() {
+            showCourse();
+        }
+   
+    
+function showCourse() {
+    fetch('http://localhost:8080/Course')
+        .then(response => response.json())
+        .then(courses => {
+            const courseTable = document.getElementById("availablecourse");
+            courses.forEach(course => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${course.courseId}</td>
+                    <td>${course.courseName}</td>
+                    <td>${course.trainer}</td>
+                `;
+                courseTable.appendChild(row);
+            });
+        })
+        .catch(error => console.log(error));
+}
+
+
+
+
+
+</script>
+
+</body>
+</html>
